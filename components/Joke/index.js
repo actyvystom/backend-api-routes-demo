@@ -5,10 +5,8 @@ import Link from "next/link";
 export default function Joke() {
   const router = useRouter();
   const { id } = router.query;
-
-  const { data, isLoading } = useSWR(
-    `https://example-apis.vercel.app/api/bad-jokes/${id}`
-  );
+  // we use our internal dynamic api route to get our joke (details)
+  const { data, isLoading } = useSWR(id ? `/api/jokes/${id}` : null);
 
   if (isLoading) {
     return <h1>Loading...</h1>;
