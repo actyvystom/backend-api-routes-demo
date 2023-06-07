@@ -16,6 +16,7 @@ export default function JokeList() {
   return (
     <ul>
       {data.map((joke) => (
+        // change the id keys as we are using mongo db ids now
         <li key={joke._id}>
           <Link href={`/${joke._id}`}>{joke.joke}</Link>
         </li>
