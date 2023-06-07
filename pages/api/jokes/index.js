@@ -12,4 +12,22 @@ export default async function handler(request, response) {
     const jokes = await Joke.find();
     response.status(200).json(jokes);
   }
+  // we check for the request method POST
+  if (request.method === "POST") {
+    try {
+      // get our joke data from the request body (comes through our form component)
+      const jokeData = request.body;
+      // We create a new document via our mongoose Model
+      const joke = new Joke(jokeData);
+      // We "save" document to our database
+      await joke.save();
+      // we send our response with a status code 201 indicating "resource created"
+      response.status(201).json({ message: "Joke created" });
+    } catch (error) {
+      // if an error occurs we log it to the console
+      console.log(error);
+      // and return an error status
+      response.status(400).json({ error: error.message });
+    }
+  }
 }
